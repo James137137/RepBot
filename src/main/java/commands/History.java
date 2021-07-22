@@ -37,7 +37,7 @@ public class History {
                 receiverID = split[1];
                 boolean vaild = User.CheckIfVaildID(event, receiverID);
                 if (!vaild) {
-                    return OnChat.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this");
+                    return OnCommand.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this");
                 }
             } else {
                mentionedMember = event.getMember();
@@ -62,7 +62,7 @@ public class History {
         List<Vote> voteList = VoteHistoryDataBase.getVoteListReciver(receiverID);
         if (voteList.isEmpty())
         {
-            return OnChat.getEmbed("History", "No history available for this user");
+            return OnCommand.getEmbed("History", "No history available for this user");
         }
         
         int j = 0;

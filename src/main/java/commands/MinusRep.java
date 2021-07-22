@@ -64,9 +64,10 @@ public class MinusRep {
             return "You can only give rep to someone once";
         }
 
+        /*
         if (UserRepDataBase.getRepNumber(receiverID) >= UserRepDataBase.getMaxRep()) {
             return "This user is already maxed out their rep points of " + UserRepDataBase.getMaxRep();
-        }
+        } */
 
         int weight = -1;
         if (User.isHardClear(event.getMember())) {

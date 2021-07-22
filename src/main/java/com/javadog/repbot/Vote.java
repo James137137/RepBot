@@ -25,13 +25,13 @@ public class Vote {
     public String reason;
     public long timeVoted;    
 
-    public Vote(Member voter, Member receiver, boolean isHardClear, long weight, String reason, boolean admin) {
-        this.voter = voter.getId();
-        this.voterName = voter.getUser().getName();
+    public Vote(Member voterm, Member receiver, boolean isHardClear, long weight, String reason, boolean admin) {
+        this.voter = voterm.getId();
+        this.voterName = voterm.getUser().getName();
         if (admin)
         {
             this.voter = "0";
-            this.voterName = "Admin:" + voter.getEffectiveName();
+            this.voterName = "Admin:" + voterm.getEffectiveName();
         }
         this.receiver = receiver.getId();
         this.receiverName = receiver.getEffectiveName();
@@ -39,15 +39,13 @@ public class Vote {
         this.weight = weight;
         this.reason = reason;
         this.timeVoted = System.currentTimeMillis();
-        Logger.log(voter.getGuild(), this.voterName + " Gave " + this.weight + " to " + this.receiverName +
-                "\n" + this.weight + " [" + this.receiver + "]" + this.receiverName + "\"" + this.reason + "/"
-        + "\n" + "Remove this with $delete " + this.timeVoted + " @" + receiverName);
+        logIt(voterm);
     }
     
-    public Vote(Member voter, String receiverID, boolean isHardClear, long weight, String reason, boolean admin) {
+    public Vote(Member voterm, String receiverID, boolean isHardClear, long weight, String reason, boolean admin) {
         
-        this.voter = voter.getId();
-        this.voterName = voter.getUser().getName();
+        this.voter = voterm.getId();
+        this.voterName = voterm.getUser().getName();
         if (admin)
         {
             this.voter = "0";
@@ -59,15 +57,7 @@ public class Vote {
         this.weight = weight;
         this.reason = reason;
         this.timeVoted = System.currentTimeMillis();
-        String weightS = "" + this.weight;
-        if (this.weight > 0 ) weightS = "+" + this.weight;
-        
-        
-        EmbedBuilder eb = new EmbedBuilder();
-        MessageEmbed build = eb.setDescription("<@" +this.voter + "> gave " + weightS + " to <@" + this.receiver +">")
-                .addField(weightS + " [" + this.receiver + "] " + this.receiverName + " \"" + this.reason + "\"", 
-                        "Remove this with $delete " + this.timeVoted + " <@" + receiver + ">", true).build();
-        Logger.log(voter.getGuild(),build);  
+        logIt(voterm);
                
     }
 
@@ -112,5 +102,17 @@ public class Vote {
         jSONObject.put("reason", reason);
         jSONObject.put("timeVoted", timeVoted);
         return jSONObject;
+    }
+
+    private void logIt(Member voterm) {
+        String weightS = "" + this.weight;
+        if (this.weight > 0 ) weightS = "+" + this.weight;
+        
+        
+        EmbedBuilder eb = new EmbedBuilder();
+        MessageEmbed build = eb.setDescription("<@" +voterm.getId()+ "> gave " + weightS + " to <@" + this.receiver +">")
+                .addField(weightS + " [" + this.receiver + "] " + this.receiverName + " \"" + this.reason + "\"", 
+                        "Remove this with $delete " + this.timeVoted + " <@" + receiver + ">", true).build();
+        Logger.log(voterm.getGuild(),build);  
     }
 }
