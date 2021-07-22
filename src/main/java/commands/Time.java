@@ -10,7 +10,9 @@ import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -33,7 +35,7 @@ public class Time {
         int seconds = getTimeLeft(userID);
         if (seconds <= 0)
         {
-            return getEmbed("Time to rep", "You can now give rep",Color.GREEN);
+            return getEmbed("Time to rep", "You can give rep now",Color.GREEN);
         }
         int min = seconds / 60;
         int sec = seconds - min*60;
@@ -43,7 +45,31 @@ public class Time {
             timeLeftToVote += min + " minute(s) and ";
         }
         timeLeftToVote += sec + " second(s)";
-        return getEmbed("Time to rep", "You can give rep in: " + timeLeftToVote, Color.RED);
+        Random random = new Random();
+        List<String> funnyPuns = new ArrayList<>();
+        funnyPuns.add("Hold your horses!");
+        funnyPuns.add("All in good time!");
+        funnyPuns.add("Not so fast bucko!");
+        funnyPuns.add("Bear with us!");
+        funnyPuns.add("Woah there big guy!");
+        funnyPuns.add("Calm your farm!");
+        funnyPuns.add("A watch pot never boils...");
+        funnyPuns.add("Simmer down!");
+        funnyPuns.add("Chillax!");
+        funnyPuns.add("Get a hold of yourself!");
+        funnyPuns.add("Contain yourself!");
+        funnyPuns.add("Keep your shirt on!");
+        funnyPuns.add("Don't get your knickers in a knot!");
+        funnyPuns.add("Don't get your feathers ruffled!");
+        
+        
+        
+        
+        
+        
+        
+        
+        return getEmbed("Time to rep", funnyPuns.get(random.nextInt(funnyPuns.size())) + " You can give rep in: " + timeLeftToVote, Color.RED);
     }
 
     private static long getLastVoteTime(String userID) {
