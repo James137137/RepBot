@@ -21,6 +21,7 @@ public class OnCommand {
 
     public OnCommand(MessageReceivedEvent event) {
         String contentRaw = event.getMessage().getContentRaw().toLowerCase();
+        if (contentRaw.contains("\n")) return;
         String command = contentRaw.split(" ")[0];
         if (command.startsWith("$") || command.startsWith("-") || command.startsWith("+")) {
             boolean isVaild = Settings.checkIsVaildChannelForCommand(command, event.getTextChannel().getName());
