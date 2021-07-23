@@ -69,14 +69,25 @@ public class User {
         }
     }
 
-    public static void removeFromHardClear(MessageReceivedEvent event, String userid) {
+    public static boolean removeFromHardClear(MessageReceivedEvent event, String userid){
         Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
-        event.getGuild().removeRoleFromMember(userid, role).queue();
+        try {
+        event.getGuild().removeRoleFromMember(userid, role).complete();
+        return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public static void addToHardClear(MessageReceivedEvent event, String userID) {
+    public static boolean addToHardClear(MessageReceivedEvent event, String userID) {
         Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
-        event.getGuild().addRoleToMember(userID, role).queue();
+        try {
+            event.getGuild().addRoleToMember(userID, role).complete();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+        
     }
 
     public static boolean CheckIfVaildID(MessageReceivedEvent event, String receiverID) {

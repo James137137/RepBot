@@ -112,17 +112,17 @@ public class MinusRep {
         String receiverName = Main.jda.retrieveUserById(receiverID).complete().getName();
         if (mentionedMember != null) receiverName = mentionedMember.getAsMention();
         
-        
+        boolean error = false;
         if (newRepAmount >= Settings.requiredForHardClear) {
-            User.addToHardClear(event, receiverID);
-            if (newRepAmount - weight < Settings.requiredForHardClear)
+            error = !User.addToHardClear(event, receiverID);
+            if (!error && newRepAmount - weight < Settings.requiredForHardClear)
             {
                 event.getChannel().sendMessage(receiverName + " is now a " + Settings.HardClearName).queue();
             }
         } else
         {
-            User.removeFromHardClear(event, receiverID);
-            if (newRepAmount - weight >= Settings.requiredForHardClear)
+            error = !User.removeFromHardClear(event, receiverID);
+            if (!error && newRepAmount - weight >= Settings.requiredForHardClear)
             {
                 event.getChannel().sendMessage(receiverName + " is no longer a " + Settings.HardClearName).queue();
             }
