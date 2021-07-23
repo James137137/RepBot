@@ -27,7 +27,6 @@ public class Settings {
 
     public static String TOKEN;
     static HashMap<String, List<String>> allowedCommandsPerChannel = new HashMap<>();
-    public static List<String> allowChannels;
     private static FileWriter file;
     public static String fileName = "settings.json";
     public static String HardClearName = "Hard Clear Member";
@@ -72,7 +71,6 @@ public class Settings {
 
     static void save() {
         settingsJSONObject.put("token", TOKEN);
-        settingsJSONObject.put("channel", allowChannels);
         settingsJSONObject.put("requiredForHardClear", requiredForHardClear);
 
         Path path = Paths.get(fileName);
@@ -94,7 +92,6 @@ public class Settings {
 
         TOKEN = (String) settingsJSONObject.get("token");
         requiredForHardClear = (long) settingsJSONObject.get("requiredForHardClear");
-        allowChannels = (List<String>) settingsJSONObject.get("channel");
     }
 
     public static boolean checkIsVaildChannelForCommand(String command, String name) {
@@ -108,9 +105,6 @@ public class Settings {
     private static class DefaultSettings {
 
         public static void getDeaultSettings() {
-            allowChannels = new ArrayList<>();
-            allowChannels.add("general");
-            allowChannels.add("Give-Rep-Here");
             requiredForHardClear = 10;
             TOKEN = "TOKENGOESHERE";
         }
