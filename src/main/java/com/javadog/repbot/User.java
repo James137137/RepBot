@@ -82,7 +82,6 @@ public class User {
     public static boolean CheckIfVaildID(MessageReceivedEvent event, String receiverID) {
 
         try {
-            System.out.println(receiverID);
             Main.jda.retrieveUserById(receiverID).complete().getName();
             return true;
         } catch (Exception e) {

@@ -36,7 +36,7 @@ public class UserRepDataBase {
         try {
             Files.write(path, bytes);
         } catch (IOException ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         }
 
     }
