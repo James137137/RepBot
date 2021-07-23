@@ -48,14 +48,17 @@ public class OnCommand {
             }
 
         } else if (contentRaw.startsWith("$delete")) {
-            output = commands.Delete.Delete(event);
+            title = "Delete feature";
+            event.getChannel().sendMessage(getEmbed(title, commands.Delete.Delete(event))).queue();
+            //output = commands.Delete.Delete(event);
         } else if (contentRaw.startsWith("$setrep")) {
-            output = commands.SetRep.SetRep(event);
+            title = "Set rep";
+            event.getChannel().sendMessage(getEmbed(title, commands.SetRep.SetRep(event))).queue();
         } else if (contentRaw.startsWith("$time")) {
             event.getChannel().sendMessage(commands.Time.Time(event)).queue();
         } else if (contentRaw.startsWith("$reset")) {
             title = "Reset";
-            output = commands.reset.Reset(event);
+            event.getChannel().sendMessage(getEmbed(title, commands.reset.Reset(event))).queue();
         } else if (contentRaw.startsWith("$test")) {
             test(event);
         }
