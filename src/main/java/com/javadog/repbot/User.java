@@ -44,22 +44,32 @@ public class User {
 
     public static void checkHC(String userID, MessageReceivedEvent event, long repAmount) {
 
-        
+        List<Role> roles = event.getGuild().getMemberById(userID).getRoles();
+        if (roles != null && repAmount == 0) {
+            for (Role role : roles) {
+                if (role.getName().equals(Settings.HardClearName)) {
+                    UserRepDataBase.setRepNumber(userID, Settings.requiredForHardClear);
+                    Vote vote = new Vote(event.getMember(), userID, true, 10, "automatic: had hardclear already", true);
+                    VoteHistoryDataBase.addNewVote(vote);
+                    User.addToHardClear(event, userID);
+                }
+            }
+
+        }
         if (repAmount >= Settings.requiredForHardClear) {
             User.addToHardClear(event, userID);
-            
-        } else
-        {
+
+        } else {
             User.removeFromHardClear(event, userID);
-            
+
         }
     }
 
-    public static boolean removeFromHardClear(MessageReceivedEvent event, String userid){
+    public static boolean removeFromHardClear(MessageReceivedEvent event, String userid) {
         Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
         try {
-        event.getGuild().removeRoleFromMember(userid, role).complete();
-        return true;
+            event.getGuild().removeRoleFromMember(userid, role).complete();
+            return true;
         } catch (Exception e) {
             return false;
         }
@@ -73,7 +83,7 @@ public class User {
         } catch (Exception e) {
             return false;
         }
-        
+
     }
 
     public static boolean CheckIfVaildID(MessageReceivedEvent event, String receiverID) {

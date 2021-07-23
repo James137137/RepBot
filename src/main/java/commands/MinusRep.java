@@ -90,15 +90,7 @@ public class MinusRep {
         if (reason.contains("\n")) {
             return "Sorry please don't include extra lines";
         }
-
-        long repNumber = UserRepDataBase.getRepNumber(receiverID);
-        if (User.isHardClear(mentionedMember,receiverID) && repNumber == 0) {
-            repNumber = Settings.requiredForHardClear;
-            UserRepDataBase.setRepNumber(receiverID, repNumber);
-            Vote vote = new Vote(mentionedMember, receiverID, User.isHardClear(mentionedMember,receiverID), 10, "automatic: had hardclear already", true);
-            VoteHistoryDataBase.addNewVote(vote);
-            User.addToHardClear(event, receiverID);
-        }
+        User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
 
         //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
         Vote vote = new Vote(event.getMember(), receiverID, User.isHardClear(mentionedMember,receiverID), weight, reason, false);
@@ -181,14 +173,7 @@ public class MinusRep {
             return "Sorry please don't include extra lines";
         }
         
-        long repNumber = UserRepDataBase.getRepNumber(mentionedMember.getId());
-        if (User.isHardClear(mentionedMember) && repNumber == 0)
-        {
-            repNumber = Settings.requiredForHardClear;
-            UserRepDataBase.setRepNumber(mentionedMember.getId(), repNumber);
-            Vote vote = new Vote(mentionedMember, mentionedMember, User.isHardClear(mentionedMember), 10, "automatic: had hardclear already",true);
-            VoteHistoryDataBase.addNewVote(vote);
-        }
+        User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
 
         //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
         Vote vote = new Vote(event.getMember(), mentionedMember.getId(), User.isHardClear(mentionedMember), weight, reason,false);

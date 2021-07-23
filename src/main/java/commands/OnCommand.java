@@ -8,9 +8,11 @@ package commands;
 import com.javadog.repbot.Main;
 import com.javadog.repbot.Settings;
 import java.awt.Color;
+import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 /**
@@ -181,8 +183,10 @@ public class OnCommand {
     }
 
     private void test(MessageReceivedEvent event) {
-        event.getChannel().sendMessage(getEmbed(event)).queue();
-
+        List<Role> roles = event.getGuild().getMemberById(event.getAuthor().getId()).getRoles();
+        for (Role role : roles) {
+            event.getTextChannel().sendMessage(role.getName()).queue();
+        }
     }
 
 }

@@ -51,13 +51,6 @@ public class History {
         User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
         
         long repNumber = UserRepDataBase.getRepNumber(receiverID);
-        if (User.isHardClear(receiverID) && repNumber == 0) {
-            repNumber = Settings.requiredForHardClear;
-            UserRepDataBase.setRepNumber(receiverID, repNumber);
-            Vote vote = new Vote(mentionedMember, receiverID, User.isHardClear(mentionedMember,receiverID), 10, "automatic: had hardclear already", true);
-            VoteHistoryDataBase.addNewVote(vote);
-            User.addToHardClear(event, receiverID);
-        }
         //String output = Main.jda.retrieveUserById(receiverID).complete().getName() + " currently has " + repNumber + " rep points \n\n";
         String output = "";
         List<Vote> voteList = VoteHistoryDataBase.getVoteListReciver(receiverID);
