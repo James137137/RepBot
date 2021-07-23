@@ -54,7 +54,7 @@ public class OnCommand {
         } else if (contentRaw.startsWith("$time")) {
             event.getChannel().sendMessage(commands.Time.Time(event)).queue();
         } else if (contentRaw.startsWith("$reset")) {
-            title = "reset";
+            title = "Reset";
             output = commands.reset.Reset(event);
         } else if (contentRaw.startsWith("$test")) {
             test(event);
