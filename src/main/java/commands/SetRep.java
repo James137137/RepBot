@@ -31,7 +31,7 @@ public class SetRep {
         Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
-            return "Please tag a user to set rep!";
+            return "You forgot to tag someone, silly!";
         }
 
         if (mentionedMembers.size() > 1) {
