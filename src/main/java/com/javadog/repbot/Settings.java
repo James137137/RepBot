@@ -98,7 +98,6 @@ public class Settings {
         if (allowedCommandsPerChannel.get(name) == null) {
             return false;
         }
-        System.out.println(allowedCommandsPerChannel.get(name) + "   " + command);
         return allowedCommandsPerChannel.get(name).contains(command);
     }
 
