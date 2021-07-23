@@ -42,30 +42,16 @@ public class User {
         return UserRepDataBase.getRepNumber(userID) >= Settings.requiredForHardClear;
     }
 
-    public static void checkHardClear(String userID, MessageReceivedEvent event, long repAmount) {
+    public static void checkHC(String userID, MessageReceivedEvent event, long repAmount) {
 
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
-        List<Member> members = event.getGuild().getMembers();
-        Member member = null;
-        for (Member m : members) {
-            if (m.getId().equals(userID)) {
-                member = m;
-            }
-            break;
-        }
-
-        if (User.isHardClear(member)) {
-            if (repAmount < Settings.requiredForHardClear) {
-                event.getGuild().removeRoleFromMember(member, role).queue();
-                event.getChannel().sendMessage(member.getEffectiveName() + " is no longer a " + Settings.HardClearName).queue();
-            }
-
-        } else {
-            if (repAmount >= Settings.requiredForHardClear) {
-                AuditableRestAction<Void> addRoleToMember = event.getGuild().addRoleToMember(member, role);
-                addRoleToMember.queue();
-                event.getChannel().sendMessage(member.getEffectiveName() + " is now a " + Settings.HardClearName).queue();
-            }
+        
+        if (repAmount >= Settings.requiredForHardClear) {
+            User.addToHardClear(event, userID);
+            
+        } else
+        {
+            User.removeFromHardClear(event, userID);
+            
         }
     }
 
@@ -107,6 +93,10 @@ public class User {
         } else {
             return 1;
         }
+    }
+
+    private static boolean Guild(String userID) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

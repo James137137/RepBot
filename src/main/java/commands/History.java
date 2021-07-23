@@ -48,6 +48,7 @@ public class History {
             mentionedMember = mentionedMembers.get(0);
             receiverID = mentionedMember.getId();
         }
+        User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
         
         long repNumber = UserRepDataBase.getRepNumber(receiverID);
         if (User.isHardClear(receiverID) && repNumber == 0) {
