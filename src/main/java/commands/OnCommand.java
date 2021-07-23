@@ -49,7 +49,7 @@ public class OnCommand {
             }
 
         } else if (contentRaw.startsWith("$delete")) {
-            title = "Delete feature";
+            title = "Delete rep";
             event.getChannel().sendMessage(getEmbed(title, commands.Delete.Delete(event))).queue();
             //output = commands.Delete.Delete(event);
         } else if (contentRaw.startsWith("$setrep")) {
