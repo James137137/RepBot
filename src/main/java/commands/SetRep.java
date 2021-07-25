@@ -11,7 +11,6 @@ import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
 import java.util.List;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

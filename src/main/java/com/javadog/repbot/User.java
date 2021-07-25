@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 
 /**
  *
@@ -107,10 +106,6 @@ public class User {
         } else {
             return 1;
         }
-    }
-
-    private static boolean Guild(String userID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public static boolean isAdmin(MessageReceivedEvent event)
