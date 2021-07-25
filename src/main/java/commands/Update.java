@@ -6,7 +6,7 @@
 package commands;
 
 import com.javadog.repbot.Settings;
-import com.javadog.repbot.User;
+import com.javadog.repbot.RepUser;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
@@ -60,7 +60,7 @@ public class Update {
 
     private static void checkForHCAndUpdate(Member mentionedMember, MessageReceivedEvent event) throws Exception {
         boolean hasHardClearRole = false;
-        Role HCRole = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role HCRole = event.getGuild().getRoleById("786709070198734870");
         List<Role> roles = mentionedMember.getRoles();
         for (Role role : roles) {
             hasHardClearRole = role.getName().equals(HCRole.getName());
@@ -71,7 +71,7 @@ public class Update {
         }
         long repNumber = UserRepDataBase.getRepNumber(mentionedMember.getId());
         if (!hasHardClearRole && repNumber >= Settings.requiredForHardClear) {
-            User.addToHardClear(event, mentionedMember.getId());
+            RepUser.addToHardClear(event, mentionedMember.getId());
             event.getTextChannel().sendMessage(OnCommand.getEmbed("Update",
                     mentionedMember.getAsMention() + " has got the required rep but no role. This has been fixed and is now HardClear",
                     Color.RED)).queue();
@@ -85,6 +85,7 @@ public class Update {
             event.getTextChannel().sendMessage(OnCommand.getEmbed("Update",
                     mentionedMember.getAsMention() + " has got the role but not the required rep. This has been fixed and has now got the required rep",
                     Color.RED)).queue();
+            return;
 
         }
         event.getTextChannel().sendMessage(OnCommand.getEmbed("Update",

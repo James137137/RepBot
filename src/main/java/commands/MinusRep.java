@@ -7,7 +7,7 @@ package commands;
 
 import com.javadog.repbot.Main;
 import com.javadog.repbot.Settings;
-import com.javadog.repbot.User;
+import com.javadog.repbot.RepUser;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
@@ -30,13 +30,13 @@ public class MinusRep {
         }
         String receiverID = null;
         Member mentionedMember = null;
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role role = event.getGuild().getRoleById("786709070198734870");
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length >= 2) {
                 receiverID = split[1];
-                boolean vaild = User.CheckIfVaildID(event, receiverID);
+                boolean vaild = RepUser.CheckIfVaildID(event, receiverID);
                 if (!vaild) {
                     return "Sorry the number doesn't seem to be vaild. Please double check this";
                 }
@@ -70,7 +70,7 @@ public class MinusRep {
         } */
 
         int weight = -1;
-        if (User.isHardClear(event.getMember())) {
+        if (RepUser.isHardClear(event.getMember())) {
             weight = -2;
         }
         String[] split = event.getMessage().getContentRaw().split(" ");
@@ -93,7 +93,7 @@ public class MinusRep {
         //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
 
         //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
-        Vote vote = new Vote(event.getMember(), receiverID, User.isHardClear(mentionedMember,receiverID), weight, reason, false);
+        Vote vote = new Vote(event.getMember(), receiverID, RepUser.isHardClear(mentionedMember,receiverID), weight, reason, false);
         //vote.updateRecieverName();
         VoteHistoryDataBase.addNewVote(vote);
         long oldRepAmount = UserRepDataBase.getRepNumber(receiverID);
@@ -106,17 +106,17 @@ public class MinusRep {
         
         boolean error = false;
         if (newRepAmount >= Settings.requiredForHardClear) {
-            error = !User.addToHardClear(event, receiverID);
+            error = !RepUser.addToHardClear(event, receiverID);
             if (!error && newRepAmount - weight < Settings.requiredForHardClear)
             {
-                event.getChannel().sendMessage(receiverName + " is now a " + Settings.HardClearName).queue();
+                event.getChannel().sendMessage(receiverName + " is now a hard clear member").queue();
             }
         } else
         {
-            error = !User.removeFromHardClear(event, receiverID);
+            error = !RepUser.removeFromHardClear(event, receiverID);
             if (!error && newRepAmount - weight >= Settings.requiredForHardClear)
             {
-                event.getChannel().sendMessage(receiverName + " is no longer a " + Settings.HardClearName).queue();
+                event.getChannel().sendMessage(receiverName + " is no longer a hard clear member").queue();
             }
         }
 
@@ -130,7 +130,7 @@ public class MinusRep {
         {
             return "You can't rep yet. " + Time.Time(event.getMember().getId());
         }
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role role = event.getGuild().getRoleById("786709070198734870");
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             return "Please tag a user to give rep too!";
@@ -151,7 +151,7 @@ public class MinusRep {
         }
 
         int weight = -1;
-        if (User.isHardClear(event.getMember())) {
+        if (RepUser.isHardClear(event.getMember())) {
             weight = -2;
         }
         String[] split = event.getMessage().getContentRaw().split(" ");
@@ -176,7 +176,7 @@ public class MinusRep {
         //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
 
         //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
-        Vote vote = new Vote(event.getMember(), mentionedMember.getId(), User.isHardClear(mentionedMember), weight, reason,false);
+        Vote vote = new Vote(event.getMember(), mentionedMember.getId(), RepUser.isHardClear(mentionedMember), weight, reason,false);
         //vote.updateRecieverName();
         VoteHistoryDataBase.addNewVote(vote);
         
@@ -184,10 +184,10 @@ public class MinusRep {
         UserRepDataBase.setRepNumber(receiverID, newRepAmount);
         
         //demote Check
-        if (User.isHardClear(mentionedMember)) {
+        if (RepUser.isHardClear(mentionedMember)) {
             if (newRepAmount < Settings.requiredForHardClear) {
                 event.getGuild().removeRoleFromMember(mentionedMember, role).queue();
-                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a " + Settings.HardClearName).queue();
+                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a hard clear member").queue();
             }
 
         } else
@@ -195,7 +195,7 @@ public class MinusRep {
             if (newRepAmount >= Settings.requiredForHardClear) {
                 AuditableRestAction<Void> addRoleToMember = event.getGuild().addRoleToMember(mentionedMember, role);
                 addRoleToMember.queue();
-                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a " + Settings.HardClearName).queue();
+                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a hard clear member").queue();
             }
         }
         

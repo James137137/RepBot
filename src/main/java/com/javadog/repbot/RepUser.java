@@ -15,11 +15,11 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  *
  * @author James Anderson
  */
-public class User {
+public class RepUser {
 
     public static boolean isHardClear(Member member) {
         for (Role role : member.getRoles()) {
-            if (role.getName().equalsIgnoreCase(Settings.HardClearName)) {
+            if (role.getId().equalsIgnoreCase("786709070198734870")) {
                 return true;
             }
         }
@@ -31,7 +31,7 @@ public class User {
             return isHardClear(userID);
         }
         for (Role role : member.getRoles()) {
-            if (role.getName().equalsIgnoreCase(Settings.HardClearName)) {
+            if (role.getId().equals("786709070198734870")) {
                 return true;
             }
         }
@@ -50,26 +50,26 @@ public class User {
         List<Role> roles = event.getGuild().getMemberById(userID).getRoles();
         if (roles != null && repAmount == 0) {
             for (Role role : roles) {
-                if (role.getName().equals(Settings.HardClearName)) {
+                if (role.getName().equals("disabled")) {
                     UserRepDataBase.setRepNumber(userID, Settings.requiredForHardClear);
                     Vote vote = new Vote(event.getMember(), userID, true, 10, "automatic: had hardclear already", true);
                     VoteHistoryDataBase.addNewVote(vote);
-                    User.addToHardClear(event, userID);
+                    RepUser.addToHardClear(event, userID);
                 }
             }
 
         }
         if (repAmount >= Settings.requiredForHardClear) {
-            User.addToHardClear(event, userID);
+            RepUser.addToHardClear(event, userID);
 
         } else {
-            User.removeFromHardClear(event, userID);
+            RepUser.removeFromHardClear(event, userID);
 
         }
     }
 
     public static boolean removeFromHardClear(MessageReceivedEvent event, String userid) {
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role role = event.getGuild().getRoleById("786709070198734870");
         try {
             event.getGuild().removeRoleFromMember(userid, role).complete();
             return true;
@@ -79,7 +79,7 @@ public class User {
     }
 
     public static boolean addToHardClear(MessageReceivedEvent event, String userID) {
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role role = event.getGuild().getRoleById("786709070198734870");
         try {
             event.getGuild().addRoleToMember(userID, role).complete();
             return true;

@@ -6,7 +6,7 @@
 package commands;
 
 import com.javadog.repbot.Settings;
-import com.javadog.repbot.User;
+import com.javadog.repbot.RepUser;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
@@ -23,11 +23,11 @@ import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 public class SetRep {
 
     public static String SetRep(MessageReceivedEvent event) {
-        if (!User.isAdmin(event)) {
+        if (!RepUser.isAdmin(event)) {
             return "Sorry you don't have permission for that command";
         }
         
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role role = event.getGuild().getRoleById("786709070198734870");
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             return "You forgot to tag someone, silly!";
@@ -38,12 +38,12 @@ public class SetRep {
         }
         Member mentionedMember = mentionedMembers.get(0);
         
-
+        
         String voterID = event.getMember().getId();
         String receiverID = mentionedMember.getId();
         
         long weight = 1;
-        if (User.isHardClear(event.getMember())) {
+        if (RepUser.isHardClear(event.getMember())) {
             weight = 2;
         }
         String[] split = event.getMessage().getContentRaw().split(" ");
@@ -69,16 +69,16 @@ public class SetRep {
             return "Please enter a reason within 5-100 characters";
         }
 
-        Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,true);
+        Vote vote = new Vote(event.getMember(), mentionedMember, RepUser.isHardClear(mentionedMember), weight, reason,true);
         VoteHistoryDataBase.addNewVote(vote);
         
         UserRepDataBase.setRepNumber(receiverID, newRepAmount);
 
         //Promote Check
-        if (User.isHardClear(mentionedMember)) {
+        if (RepUser.isHardClear(mentionedMember)) {
             if (newRepAmount < Settings.requiredForHardClear) {
                 event.getGuild().removeRoleFromMember(mentionedMember, role).queue();
-                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a " + Settings.HardClearName).queue();
+                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a hard clear member").queue();
             }
 
         } else
@@ -86,7 +86,7 @@ public class SetRep {
             if (newRepAmount >= Settings.requiredForHardClear) {
                 AuditableRestAction<Void> addRoleToMember = event.getGuild().addRoleToMember(mentionedMember, role);
                 addRoleToMember.queue();
-                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a " + Settings.HardClearName).queue();
+                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a hard clear member").queue();
             }
         }
 

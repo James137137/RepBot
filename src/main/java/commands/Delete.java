@@ -6,7 +6,7 @@
 package commands;
 
 import com.javadog.repbot.Settings;
-import com.javadog.repbot.User;
+import com.javadog.repbot.RepUser;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
@@ -50,19 +50,19 @@ public class Delete {
                 
                 
                 //demote Check
-                Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+                Role role = event.getGuild().getRoleById("786709070198734870");
                 long newRepAmount = UserRepDataBase.getRepNumber(vote.receiver) - vote.weight;
-                if (User.isHardClear(mentionedMember)) {
+                if (RepUser.isHardClear(mentionedMember)) {
                     if (newRepAmount < Settings.requiredForHardClear) {
                         event.getGuild().removeRoleFromMember(mentionedMember, role).queue();
-                        event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a " + Settings.HardClearName).queue();
+                        event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a hard clear member").queue();
                     }
 
                 } else {
                     if (newRepAmount >= Settings.requiredForHardClear) {
                         AuditableRestAction<Void> addRoleToMember = event.getGuild().addRoleToMember(mentionedMember, role);
                         addRoleToMember.queue();
-                        event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a " + Settings.HardClearName).queue();
+                        event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a hard clear member").queue();
                     }
                 }
                 

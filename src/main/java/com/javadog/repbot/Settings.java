@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -29,7 +30,7 @@ public class Settings {
     static HashMap<String, List<String>> allowedCommandsPerChannel = new HashMap<>();
     private static FileWriter file;
     public static String fileName = "settings.json";
-    public static String HardClearName = "Hard Clear Member";
+    public static String HardClearName3 = "Hard Clear Member";
 
     private static JSONObject settingsJSONObject = new JSONObject();
     public static long requiredForHardClear = 10;
@@ -97,11 +98,21 @@ public class Settings {
         requiredForHardClear = (long) settingsJSONObject.get("requiredForHardClear");
     }
 
-    public static boolean checkIsVaildChannelForCommand(String command, String name) {
-        if (allowedCommandsPerChannel.get(name) == null) {
-            return false;
+    public static boolean checkIsVaildChannelForCommand(String command, String messagedChannelName) {
+        Set<String> keySet = allowedCommandsPerChannel.keySet();
+        for (String channelName : keySet) {
+            if (messagedChannelName.contains(channelName))
+            {
+                List<String> commandsAllowed = allowedCommandsPerChannel.get(channelName);
+                for (String commandAllowed : commandsAllowed) {
+                    if (commandAllowed.equals(command))
+                    {
+                        return true;
+                    }
+                }
+            }
         }
-        return allowedCommandsPerChannel.get(name).contains(command);
+        return false;
     }
 
     private static class DefaultSettings {

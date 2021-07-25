@@ -6,7 +6,7 @@
 package commands;
 
 import com.javadog.repbot.Settings;
-import com.javadog.repbot.User;
+import com.javadog.repbot.RepUser;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
@@ -22,7 +22,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class reset {
 
     public static String Reset(MessageReceivedEvent event) {
-        if (User.isAdmin(event)) {
+        if (RepUser.isAdmin(event)) {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length != 2) {
                 return "command format is $reset @user";
@@ -41,11 +41,11 @@ public class reset {
                 }
             }
             
-            Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+            Role role = event.getGuild().getRoleById("786709070198734870");
             UserRepDataBase.setRepNumber(mentionedMember.getId(), 0);
 
             event.getGuild().removeRoleFromMember(mentionedMember, role).queue();
-            event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a " + Settings.HardClearName).queue();
+            event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a hard clear member").queue();
             return "Reset complete. " + mentionedMember.getAsMention() + " now has " + UserRepDataBase.getRepNumber(mentionedMember.getId()) + " rep points";
 
         }

@@ -7,7 +7,7 @@ package commands;
 
 import com.javadog.repbot.Main;
 import com.javadog.repbot.Settings;
-import com.javadog.repbot.User;
+import com.javadog.repbot.RepUser;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
@@ -26,7 +26,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class History {
 
     public static MessageEmbed History(MessageReceivedEvent event, boolean full) {
-        Role role = event.getGuild().getRolesByName(Settings.HardClearName, false).get(0);
+        Role role = event.getGuild().getRoleById("786709070198734870");
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         Member mentionedMember = null;
         String receiverID;
@@ -34,7 +34,7 @@ public class History {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length >= 2) {
                 receiverID = split[1];
-                boolean vaild = User.CheckIfVaildID(event, receiverID);
+                boolean vaild = RepUser.CheckIfVaildID(event, receiverID);
                 if (!vaild) {
                     return OnCommand.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this",Color.GREEN);
                 }
@@ -74,7 +74,7 @@ public class History {
             output += vote.weight + " " + vote.voterName + " Reason: " + vote.reason + "\n";
             
         }
-        MessageEmbed embedHistory = getEmbedHistory(event, receiverID, repNumber, User.isHardClear(receiverID), output, full);
+        MessageEmbed embedHistory = getEmbedHistory(event, receiverID, repNumber, RepUser.isHardClear(receiverID), output, full);
         
         
         
@@ -133,7 +133,7 @@ public class History {
          */
         eb.addField(":star2: Repuation", repNumberS, true);
         eb.addField(":trophy: Hard Clear", hardclear, true);
-        eb.addField(":scales: Weight", "" + User.getWeight(null, userID), true);
+        eb.addField(":scales: Weight", "" + RepUser.getWeight(null, userID), true);
         if (!fullHistory)
         {
             text += "\n\nFor full history please type $history full";
