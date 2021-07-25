@@ -11,11 +11,9 @@ import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
 import java.util.List;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 
 /**
  *
@@ -24,7 +22,7 @@ import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 public class reset {
 
     public static String Reset(MessageReceivedEvent event) {
-        if (event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getAuthor().getId().equals("122437019707244548")) {
+        if (User.isAdmin(event)) {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length != 2) {
                 return "command format is $reset @user";

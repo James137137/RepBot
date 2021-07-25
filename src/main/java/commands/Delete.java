@@ -24,7 +24,8 @@ import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 public class Delete {
 
     public static String Delete(MessageReceivedEvent event) {
-        if (event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getAuthor().getId().equals("122437019707244548")) {
+        if (event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getAuthor().getId().equals("122437019707244548")
+                || event.getAuthor().getId().equals("164254093865385985")) {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length != 3) {
                 return "command format is $delete 123456 @user";

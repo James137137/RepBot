@@ -57,7 +57,7 @@ public class Vote {
         this.weight = weight;
         this.reason = reason;
         this.timeVoted = System.currentTimeMillis();
-        logIt(voterm);
+        //(voterm);
                
     }
 

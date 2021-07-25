@@ -24,7 +24,7 @@ import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 public class SetRep {
 
     public static String SetRep(MessageReceivedEvent event) {
-        if (!event.getMember().hasPermission(Permission.ADMINISTRATOR) && !event.getAuthor().getId().equals("122437019707244548")) {
+        if (!User.isAdmin(event)) {
             return "Sorry you don't have permission for that command";
         }
         

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

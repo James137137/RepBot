@@ -6,6 +6,7 @@
 package com.javadog.repbot;
 
 import java.util.List;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -110,6 +111,12 @@ public class User {
 
     private static boolean Guild(String userID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static boolean isAdmin(MessageReceivedEvent event)
+    {
+        return (event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getAuthor().getId().equals("122437019707244548")
+                || event.getAuthor().getId().equals("164254093865385985"));
     }
 
 }

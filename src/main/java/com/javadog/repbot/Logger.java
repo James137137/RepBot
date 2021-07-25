@@ -22,7 +22,6 @@ public class Logger {
     public static void log(Guild guild, String message)
     {
         List<TextChannel> textChannelsByName = guild.getTextChannelsByName("reputation-logs", true);
-        System.err.println(textChannelsByName.size());
         for (TextChannel textChannel : textChannelsByName) {
             textChannel.sendMessage(message).queue();
         }
@@ -31,7 +30,6 @@ public class Logger {
     public static void log(Guild guild, MessageEmbed message)
     {
         List<TextChannel> textChannelsByName = guild.getTextChannelsByName("reputation-logs", true);
-        System.err.println(textChannelsByName.size());
         for (TextChannel textChannel : textChannelsByName) {
             textChannel.sendMessage(message).queue();
         }

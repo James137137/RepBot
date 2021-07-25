@@ -24,7 +24,7 @@ public class PlusRep {
 
     public static String PlusRep(MessageReceivedEvent event) {
         if (!Time.canVoteNow(event.getMember().getId())) {
-            return "You can't give rep yet. Type $time" ;
+            return "You can't give rep yet. Type $time";
         }
         String receiverID = null;
         Member mentionedMember = null;
@@ -86,7 +86,7 @@ public class PlusRep {
         }
 
         //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
-
+        
         //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
         Vote vote = new Vote(event.getMember(), receiverID, User.isHardClear(mentionedMember, receiverID), weight, reason, false);
         //vote.updateRecieverName();
@@ -102,6 +102,7 @@ public class PlusRep {
         }
 
         boolean error = false;
+        //
         if (newRepAmount >= Settings.requiredForHardClear) {
             error = !User.addToHardClear(event, receiverID);
             if (!error && newRepAmount - weight < Settings.requiredForHardClear) {
