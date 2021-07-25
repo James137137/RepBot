@@ -11,7 +11,6 @@ import com.javadog.repbot.User;
 import com.javadog.repbot.UserRepDataBase;
 import com.javadog.repbot.Vote;
 import com.javadog.repbot.VoteHistoryDataBase;
-import event.OnChat;
 import java.awt.Color;
 import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;

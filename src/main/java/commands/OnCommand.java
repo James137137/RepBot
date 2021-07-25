@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 /**
@@ -64,6 +65,9 @@ public class OnCommand {
             event.getChannel().sendMessage(getEmbed(title, commands.reset.Reset(event))).queue();
         } else if (contentRaw.startsWith("$test")) {
             test(event);
+        } else if (contentRaw.startsWith("$update")) {
+            title = "Update";
+            event.getChannel().sendMessage(getEmbed(title, commands.Update.Update(event))).queue();
         }
 
         if (output != null) {
@@ -91,9 +95,9 @@ public class OnCommand {
         /*
     Set the color
          */
-        eb.setColor(Color.red);
-        eb.setColor(new Color(0xF40C0C));
-        eb.setColor(new Color(255, 0, 54));
+        eb.setColor(Color.white);
+        //eb.setColor(new Color(0xF40C0C));
+        //eb.setColor(new Color(255, 0, 54));
 
         /*
     Set the text of the Embed:
@@ -183,7 +187,7 @@ public class OnCommand {
     }
 
     private void test(MessageReceivedEvent event) {
-        List<Role> roles = event.getGuild().getMemberById(event.getAuthor().getId()).getRoles();
+        List<Role> roles = event.getMessage().getMentionedMembers().get(0).getRoles();
         for (Role role : roles) {
             event.getTextChannel().sendMessage(role.getName()).queue();
         }
