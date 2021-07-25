@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.JDABuilder;
 public class Main {
     
     
-    public static boolean debug = true;
+    public static boolean debug = false;
     
     public static JDA jda;
     public static void main(String[] args) throws LoginException, InterruptedException {

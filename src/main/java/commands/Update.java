@@ -53,6 +53,7 @@ public class Update {
                 Logger.getLogger(Update.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        if (output.isEmpty()) return;
         event.getTextChannel().sendMessage(
                 OnCommand.getEmbed("Update", output, Color.red)
         ).queue();

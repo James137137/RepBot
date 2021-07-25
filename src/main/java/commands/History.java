@@ -36,7 +36,7 @@ public class History {
                 receiverID = split[1];
                 boolean vaild = User.CheckIfVaildID(event, receiverID);
                 if (!vaild) {
-                    return OnCommand.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this");
+                    return OnCommand.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this",Color.GREEN);
                 }
             } else {
                mentionedMember = event.getMember();
@@ -55,11 +55,12 @@ public class History {
         List<Vote> voteList = VoteHistoryDataBase.getVoteListReciver(receiverID);
         if (voteList.isEmpty())
         {
-            return OnCommand.getEmbed("History", "No history available for this user");
+            return OnCommand.getEmbed("History", "No history available for this user",Color.white);
         }
         
         int j = 0;
-        if (!full) j= voteList.size() - 6;
+        if (voteList.size() <= 5) full = true;
+        if (!full) j= voteList.size() - 5;
         if (j < 0) j = 0;
         
         
@@ -73,7 +74,7 @@ public class History {
             output += vote.weight + " " + vote.voterName + " Reason: " + vote.reason + "\n";
             
         }
-        MessageEmbed embedHistory = getEmbedHistory(event, receiverID, repNumber, User.isHardClear(receiverID), output);
+        MessageEmbed embedHistory = getEmbedHistory(event, receiverID, repNumber, User.isHardClear(receiverID), output, full);
         
         
         
@@ -81,7 +82,7 @@ public class History {
     }
     
     
-    public static MessageEmbed getEmbedHistory(MessageReceivedEvent event, String userID, long repNumber, boolean isHardClear, String text) {
+    public static MessageEmbed getEmbedHistory(MessageReceivedEvent event, String userID, long repNumber, boolean isHardClear, String text, boolean fullHistory) {
         // Create the EmbedBuilder instance
         EmbedBuilder eb = new EmbedBuilder();
         String repNumberS = "" +repNumber;
@@ -133,6 +134,10 @@ public class History {
         eb.addField(":star2: Repuation", repNumberS, true);
         eb.addField(":trophy: Hard Clear", hardclear, true);
         eb.addField(":scales: Weight", "" + User.getWeight(null, userID), true);
+        if (!fullHistory)
+        {
+            text += "\n\nFor full history please type $history full";
+        }
         eb.addField("Repuation History :page_facing_up:", text, false);
 
         /*
@@ -157,7 +162,8 @@ public class History {
     1. Arg: text as string
     2. icon url as string (can be null)
          */
-        eb.setFooter("Request by: " + event.getAuthor().getName(), event.getAuthor().getEffectiveAvatarUrl());
+        String footer = "Request by: " + event.getAuthor().getName();
+        eb.setFooter(footer, event.getAuthor().getEffectiveAvatarUrl());
 
         /*
     Set image:

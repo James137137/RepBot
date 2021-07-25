@@ -24,7 +24,9 @@ public class OnCommand {
 
     public OnCommand(MessageReceivedEvent event) {
         String contentRaw = event.getMessage().getContentRaw().toLowerCase();
-        if (contentRaw.contains("\n")) return;
+        if (contentRaw.contains("\n")) {
+            return;
+        }
         String command = contentRaw.split(" ")[0];
         if (command.startsWith("$") || command.startsWith("-") || command.startsWith("+")) {
             boolean isVaild = Settings.checkIsVaildChannelForCommand(command, event.getTextChannel().getName());
@@ -53,26 +55,27 @@ public class OnCommand {
 
         } else if (contentRaw.startsWith("$delete")) {
             title = "Delete rep";
-            event.getChannel().sendMessage(getEmbed(title, commands.Delete.Delete(event))).queue();
+            event.getChannel().sendMessage(getEmbed(title, commands.Delete.Delete(event), Color.white)).queue();
             //output = commands.Delete.Delete(event);
         } else if (contentRaw.startsWith("$setrep")) {
             title = "Set rep";
-            event.getChannel().sendMessage(getEmbed(title, commands.SetRep.SetRep(event))).queue();
+            event.getChannel().sendMessage(getEmbed(title, commands.SetRep.SetRep(event), Color.white)).queue();
         } else if (contentRaw.startsWith("$time")) {
             event.getChannel().sendMessage(commands.Time.Time(event)).queue();
         } else if (contentRaw.startsWith("$reset")) {
             title = "Reset";
-            event.getChannel().sendMessage(getEmbed(title, commands.reset.Reset(event))).queue();
+            event.getChannel().sendMessage(getEmbed(title, commands.reset.Reset(event), Color.white)).queue();
         } else if (contentRaw.startsWith("$test")) {
             test(event);
         } else if (contentRaw.startsWith("$update")) {
             title = "Update";
-            event.getChannel().sendMessage(getEmbed(title, commands.Update.Update(event))).queue();
+            commands.Update.Update(event);
+            return;
         }
 
         if (output != null) {
             if (title.length() > 0) {
-                channel.sendMessage(getEmbed(title, output)).queue();
+                channel.sendMessage(getEmbed(title, output, Color.white)).queue();
             } else {
                 channel.sendMessage(output).queue();
             }
@@ -81,7 +84,7 @@ public class OnCommand {
 
     }
 
-    public static MessageEmbed getEmbed(String title, String text) {
+    public static MessageEmbed getEmbed(String title, String text, Color color) {
         // Create the EmbedBuilder instance
         EmbedBuilder eb = new EmbedBuilder();
 
@@ -95,7 +98,7 @@ public class OnCommand {
         /*
     Set the color
          */
-        eb.setColor(Color.white);
+        eb.setColor(color);
         //eb.setColor(new Color(0xF40C0C));
         //eb.setColor(new Color(255, 0, 54));
 
