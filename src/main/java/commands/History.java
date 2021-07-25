@@ -48,7 +48,7 @@ public class History {
             mentionedMember = mentionedMembers.get(0);
             receiverID = mentionedMember.getId();
         }
-        User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
+        //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
         
         long repNumber = UserRepDataBase.getRepNumber(receiverID);
         //String output = Main.jda.retrieveUserById(receiverID).complete().getName() + " currently has " + repNumber + " rep points \n\n";

@@ -42,8 +42,11 @@ public class User {
         return UserRepDataBase.getRepNumber(userID) >= Settings.requiredForHardClear;
     }
 
-    public static void checkHC(String userID, MessageReceivedEvent event, long repAmount) {
-
+    public static void checkHC_disable(String userID, MessageReceivedEvent event, long repAmount) {
+        
+        event.getTextChannel().sendMessage("A part of the code was called but should be disabled....").queue();
+        
+        
         List<Role> roles = event.getGuild().getMemberById(userID).getRoles();
         if (roles != null && repAmount == 0) {
             for (Role role : roles) {

@@ -86,7 +86,7 @@ public class PlusRep {
             return "Sorry please don't include extra lines";
         }
 
-        User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
+        //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
 
         //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
         Vote vote = new Vote(event.getMember(), receiverID, User.isHardClear(mentionedMember, receiverID), weight, reason, false);
