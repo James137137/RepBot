@@ -30,8 +30,8 @@ public class PlusRep {
         String receiverID = null;
         Member mentionedMember = null;
         Role role = event.getGuild().getRoleById("786709070198734870");
-        Message message = event.getMessage();
-        List<Member> mentionedMembers = message.getMentionedMembers();
+        Message message2 = event.getMessage();
+        List<Member> mentionedMembers = message2.getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length >= 2) {
