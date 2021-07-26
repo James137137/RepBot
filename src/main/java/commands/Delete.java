@@ -32,11 +32,6 @@ public class Delete {
             return "command format is $delete 123456";
         }
 
-        List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-        if (mentionedMembers.isEmpty()) {
-            return "Please include the @user within the command";
-        }
-
         Vote vote = null;
         try {
             long id = Long.parseLong(split[1]);
