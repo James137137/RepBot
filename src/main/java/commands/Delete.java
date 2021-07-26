@@ -26,7 +26,7 @@ public class Delete {
         if (event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getAuthor().getId().equals("122437019707244548")
                 || event.getAuthor().getId().equals(Settings.hardClearID)) {
             String[] split = event.getMessage().getContentRaw().split(" ");
-            if (split.length != 3) {
+            if (split.length != 2) {
                 return "command format is $delete 123456";
             }
 
