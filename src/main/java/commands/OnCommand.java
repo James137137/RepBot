@@ -6,15 +6,11 @@
 package commands;
 
 import com.javadog.repbot.Main;
-import com.javadog.repbot.RepUser;
 import com.javadog.repbot.Settings;
 import java.awt.Color;
-import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 /**
