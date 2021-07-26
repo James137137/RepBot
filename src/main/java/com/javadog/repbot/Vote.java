@@ -112,7 +112,8 @@ public class Vote {
         EmbedBuilder eb = new EmbedBuilder();
         MessageEmbed build = eb.setDescription("<@" +voterm.getId()+ "> gave " + weightS + " to <@" + this.receiver +">")
                 .addField(weightS + " [" + this.receiver + "] " + this.receiverName + " \"" + this.reason + "\"", 
-                        "Remove this with $delete " + this.timeVoted + " <@" + receiver + ">", true).build();
+                        "Remove this with $delete " + this.timeVoted + " < @" + receiver + "> \n"
+                                + "delete the space between < @" , true).build();
         Logger.log(voterm.getGuild(),build);  
     }
 }
