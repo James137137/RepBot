@@ -53,7 +53,7 @@ public class Time {
         funnyPuns.add("Bear with us!");
         funnyPuns.add("Woah there big guy!");
         funnyPuns.add("Calm your farm!");
-        funnyPuns.add("A watch pot never boils...");
+        funnyPuns.add("A watched pot never boils...");
         funnyPuns.add("Simmer down!");
         funnyPuns.add("Chillax!");
         funnyPuns.add("Get a hold of yourself!");
