@@ -19,7 +19,7 @@ public class RepUser {
 
     public static boolean isHardClear(Member member) {
         for (Role role : member.getRoles()) {
-            if (role.getId().equalsIgnoreCase("786709070198734870")) {
+            if (role.getId().equalsIgnoreCase(Settings.hardClearID)) {
                 return true;
             }
         }
@@ -31,7 +31,7 @@ public class RepUser {
             return isHardClear(userID);
         }
         for (Role role : member.getRoles()) {
-            if (role.getId().equals("786709070198734870")) {
+            if (role.getId().equals(Settings.hardClearID)) {
                 return true;
             }
         }
@@ -69,7 +69,7 @@ public class RepUser {
     }
 
     public static boolean removeFromHardClear(MessageReceivedEvent event, String userid) {
-        Role role = event.getGuild().getRoleById("786709070198734870");
+        Role role = event.getGuild().getRoleById(Settings.hardClearID);
         try {
             event.getGuild().removeRoleFromMember(userid, role).complete();
             return true;
@@ -79,7 +79,7 @@ public class RepUser {
     }
 
     public static boolean addToHardClear(MessageReceivedEvent event, String userID) {
-        Role role = event.getGuild().getRoleById("786709070198734870");
+        Role role = event.getGuild().getRoleById(Settings.hardClearID);
         try {
             event.getGuild().addRoleToMember(userID, role).complete();
             return true;

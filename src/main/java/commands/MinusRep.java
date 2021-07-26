@@ -30,7 +30,7 @@ public class MinusRep {
         }
         String receiverID = null;
         Member mentionedMember = null;
-        Role role = event.getGuild().getRoleById("786709070198734870");
+        Role role = event.getGuild().getRoleById(Settings.hardClearID);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             String[] split = event.getMessage().getContentRaw().split(" ");
@@ -130,7 +130,7 @@ public class MinusRep {
         {
             return "You can't rep yet. " + Time.Time(event.getMember().getId());
         }
-        Role role = event.getGuild().getRoleById("786709070198734870");
+        Role role = event.getGuild().getRoleById(Settings.hardClearID);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             return "Please tag a user to give rep too!";

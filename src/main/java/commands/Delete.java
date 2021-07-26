@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.requests.restaction.AuditableRestAction;
 
 /**
  *
@@ -25,17 +24,16 @@ public class Delete {
 
     public static String Delete(MessageReceivedEvent event) {
         if (event.getMember().hasPermission(Permission.ADMINISTRATOR) || event.getAuthor().getId().equals("122437019707244548")
-                || event.getAuthor().getId().equals("164254093865385985")) {
+                || event.getAuthor().getId().equals(Settings.hardClearID)) {
             String[] split = event.getMessage().getContentRaw().split(" ");
             if (split.length != 3) {
-                return "command format is $delete 123456 @user";
+                return "command format is $delete 123456";
             }
 
             List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
             if (mentionedMembers.isEmpty()) {
                 return "Please include the @user within the command";
             }
-            Member mentionedMember = mentionedMembers.get(0);
 
             Vote vote = null;
             try {
@@ -47,29 +45,28 @@ public class Delete {
             if (vote == null) {
                 return "Can not find. Please check the number again";
             } else {
-                
-                
-                //demote Check
-                Role role = event.getGuild().getRoleById("786709070198734870");
-                long newRepAmount = UserRepDataBase.getRepNumber(vote.receiver) - vote.weight;
-                if (RepUser.isHardClear(mentionedMember)) {
-                    if (newRepAmount < Settings.requiredForHardClear) {
-                        event.getGuild().removeRoleFromMember(mentionedMember, role).queue();
-                        event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a hard clear member").queue();
-                    }
 
+                //demote Check
+                Role role = event.getGuild().getRoleById(Settings.hardClearID);
+                long oldRepAmount = UserRepDataBase.getRepNumber(vote.receiver);
+                long weight = vote.weight;
+                String receiverID = vote.receiver;
+                String receiverName = vote.receiverName;
+                boolean error = false;
+                if (oldRepAmount - weight >= Settings.requiredForHardClear) {
+                    error = !RepUser.addToHardClear(event, receiverID);
+                    if (!error && oldRepAmount < Settings.requiredForHardClear) {
+                        event.getChannel().sendMessage(receiverName + " is now a hard clear member").queue();
+                    }
                 } else {
-                    if (newRepAmount >= Settings.requiredForHardClear) {
-                        AuditableRestAction<Void> addRoleToMember = event.getGuild().addRoleToMember(mentionedMember, role);
-                        addRoleToMember.queue();
-                        event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a hard clear member").queue();
+                    error = !RepUser.removeFromHardClear(event, receiverID);
+                    if (!error && oldRepAmount >= Settings.requiredForHardClear) {
+                        event.getChannel().sendMessage(receiverName + " is no longer a hard clear member").queue();
                     }
                 }
-                
-                
-                
+
                 UserRepDataBase.setRepNumber(vote.receiver, UserRepDataBase.getRepNumber(vote.receiver) - vote.weight);
-                VoteHistoryDataBase.removeVote(vote,true);
+                VoteHistoryDataBase.removeVote(vote, true);
                 return "Deleted. " + vote.receiverName + " now has " + UserRepDataBase.getRepNumber(vote.receiver) + " rep points";
             }
 

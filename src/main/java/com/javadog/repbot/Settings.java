@@ -30,7 +30,9 @@ public class Settings {
     static HashMap<String, List<String>> allowedCommandsPerChannel = new HashMap<>();
     private static FileWriter file;
     public static String fileName = "settings.json";
-    public static String HardClearName3 = "Hard Clear Member";
+    public static String HardClearName = "Hard Clear Member";
+     public static String hardClearID = "786709070198734870"; //LiveServerID
+    //public static String hardClearID = "866983820054102067"; //TestServerID
 
     private static JSONObject settingsJSONObject = new JSONObject();
     public static long requiredForHardClear = 10;

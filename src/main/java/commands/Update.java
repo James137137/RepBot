@@ -60,7 +60,7 @@ public class Update {
 
     private static void checkForHCAndUpdate(Member mentionedMember, MessageReceivedEvent event) throws Exception {
         boolean hasHardClearRole = false;
-        Role HCRole = event.getGuild().getRoleById("786709070198734870");
+        Role HCRole = event.getGuild().getRoleById(Settings.hardClearID);
         List<Role> roles = mentionedMember.getRoles();
         for (Role role : roles) {
             hasHardClearRole = role.getName().equals(HCRole.getName());

@@ -41,7 +41,7 @@ public class reset {
                 }
             }
             
-            Role role = event.getGuild().getRoleById("786709070198734870");
+            Role role = event.getGuild().getRoleById(Settings.hardClearID);
             UserRepDataBase.setRepNumber(mentionedMember.getId(), 0);
 
             event.getGuild().removeRoleFromMember(mentionedMember, role).queue();

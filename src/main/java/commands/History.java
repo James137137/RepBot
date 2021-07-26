@@ -26,7 +26,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class History {
 
     public static MessageEmbed History(MessageReceivedEvent event, boolean full) {
-        Role role = event.getGuild().getRoleById("786709070198734870");
+        Role role = event.getGuild().getRoleById(Settings.hardClearID);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         Member mentionedMember = null;
         String receiverID;

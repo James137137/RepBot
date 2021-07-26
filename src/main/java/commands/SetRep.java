@@ -27,7 +27,7 @@ public class SetRep {
             return "Sorry you don't have permission for that command";
         }
         
-        Role role = event.getGuild().getRoleById("786709070198734870");
+        Role role = event.getGuild().getRoleById(Settings.hardClearID);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         if (mentionedMembers.isEmpty()) {
             return "You forgot to tag someone, silly!";
