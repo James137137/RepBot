@@ -163,9 +163,9 @@ public class MinusRep {
         for (int i = 3; i < split.length; i++) {
             reason = reason + " " + split[i];
         }
-        if (reason.length() < 5 || reason.length() > 100)
+        if (reason.length() < 5 || reason.length() > 150)
         {
-            return "Please enter a reason within 5-100 characters";
+            return "Please enter a reason within 5-150 characters";
         }
         
         if (reason.contains("\n"))
