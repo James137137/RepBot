@@ -48,6 +48,7 @@ public class Settings {
         commands.add("+rep");
         commands.add("-rep");
         commands.add("$history");
+        commands.add("$votehistory");
         commands.add("$time");
         commands.add("$test");
         commands.add("$update");
@@ -55,10 +56,12 @@ public class Settings {
         List<String> commands2 = new ArrayList<String>();
         commands2.add("$time");
         commands2.add("$history");
+        commands2.add("$votehistory");
         commands2.add("$update");
         allowedCommandsPerChannel.put("bot-commands", commands2);
         List<String> commands3 = new ArrayList<String>();
         commands3.add("$history");
+        commands3.add("vote$history");
         commands3.add("$delete");
         commands3.add("$reset");
         commands3.add("$setrep");

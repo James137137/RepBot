@@ -52,6 +52,15 @@ public class OnCommand {
                 channel.sendMessage(commands.History.History(event, false)).queue();
             }
 
+        } else if (contentRaw.startsWith("$votehistory")) {
+            title = "Vote History";
+            if (contentRaw.toLowerCase().contains("full")) {
+
+                channel.sendMessage(commands.VoteHistory.VoteHistory(event, true)).queue();
+            } else {
+                channel.sendMessage(commands.VoteHistory.VoteHistory(event, false)).queue();
+            }
+
         } else if (contentRaw.startsWith("$delete")) {
             title = "Delete rep";
             event.getChannel().sendMessage(getEmbed(title, commands.Delete.Delete(event), Color.white)).queue();
