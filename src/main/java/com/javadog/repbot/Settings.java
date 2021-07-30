@@ -56,7 +56,7 @@ public class Settings {
         List<String> commands2 = new ArrayList<String>();
         commands2.add("$time");
         commands2.add("$history");
-        commands2.add("rephistory");
+        commands2.add("$rephistory");
         commands2.add("$update");
         allowedCommandsPerChannel.put("bot-commands", commands2);
         List<String> commands3 = new ArrayList<String>();
