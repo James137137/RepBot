@@ -52,13 +52,13 @@ public class OnCommand {
                 channel.sendMessage(commands.History.History(event, false)).queue();
             }
 
-        } else if (contentRaw.startsWith("$votehistory")) {
-            title = "Vote History";
+        } else if (contentRaw.startsWith("$rephistory")) {
+            title = "Rep History";
             if (contentRaw.toLowerCase().contains("full")) {
 
-                channel.sendMessage(commands.VoteHistory.VoteHistory(event, true)).queue();
+                channel.sendMessage(commands.RepHistory.RepHistory(event, true)).queue();
             } else {
-                channel.sendMessage(commands.VoteHistory.VoteHistory(event, false)).queue();
+                channel.sendMessage(commands.RepHistory.RepHistory(event, false)).queue();
             }
 
         } else if (contentRaw.startsWith("$delete")) {

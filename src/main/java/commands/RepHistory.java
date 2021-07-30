@@ -23,9 +23,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  *
  * @author James Anderson
  */
-public class VoteHistory {
+public class RepHistory {
     
-    public static MessageEmbed VoteHistory(MessageReceivedEvent event, boolean full) {
+    public static MessageEmbed RepHistory(MessageReceivedEvent event, boolean full) {
         Role role = event.getGuild().getRoleById(Settings.hardClearID);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         Member mentionedMember = event.getMessage().getMember();
@@ -39,7 +39,7 @@ public class VoteHistory {
         List<Vote> voteList = VoteHistoryDataBase.getVoteListVoter(receiverID);
         if (voteList.isEmpty())
         {
-            return OnCommand.getEmbed("History", "No history available",Color.white);
+            return OnCommand.getEmbed("Rep History", "No history available",Color.white);
         }
         
         int j = 0;
@@ -89,11 +89,11 @@ public class VoteHistory {
         String url = Main.jda.retrieveUserById(userID).complete().getAvatarUrl();
         if (title.toLowerCase().charAt(title.length()-1) == 's')
         {
-            title += "' Vote History";
+            title += "' Rep History";
         }
         else
         {
-            title += "'s Vote History";
+            title += "'s Rep History";
         }
         
         eb.setTitle(title , null);
@@ -120,7 +120,7 @@ public class VoteHistory {
         //eb.addField(":scales: Weight", "" + RepUser.getWeight(null, userID), true);
         if (!fullHistory)
         {
-            text += "\n\nFor full history please type $votehistory full";
+            text += "\n\nFor full history please type $rephistory full";
         }
         eb.addField("Repuation History :page_facing_up:", text, false);
 
