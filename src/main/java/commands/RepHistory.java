@@ -24,59 +24,56 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  * @author James Anderson
  */
 public class RepHistory {
-    
+
     public static MessageEmbed RepHistory(MessageReceivedEvent event, boolean full) {
         Role role = event.getGuild().getRoleById(Settings.hardClearID);
         List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
         Member mentionedMember = event.getMessage().getMember();
         String receiverID = mentionedMember.getId();
-        
+
         //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
-        
         long repNumber = UserRepDataBase.getRepNumber(receiverID);
         //String output = Main.jda.retrieveUserById(receiverID).complete().getName() + " currently has " + repNumber + " rep points \n\n";
         String output = "";
         List<Vote> voteList = VoteHistoryDataBase.getVoteListVoter(receiverID);
-        if (voteList.isEmpty())
-        {
-            return OnCommand.getEmbed("Rep History", "No history available",Color.white);
+        if (voteList.isEmpty()) {
+            return OnCommand.getEmbed("Rep History", "No history available", Color.white);
         }
-        
+
         int j = 0;
-        if (voteList.size() <= 5) full = true;
-        if (!full) j= voteList.size() - 5;
-        if (j < 0) j = 0;
-        
-        
-        for (int i = voteList.size() -1 ; i >= j; i--) {
+        if (voteList.size() <= 5) {
+            full = true;
+        }
+        if (!full) {
+            j = voteList.size() - 5;
+        }
+        if (j < 0) {
+            j = 0;
+        }
+
+        for (int i = voteList.size() - 1; i >= j; i--) {
             Vote vote = voteList.get(i);
-            if (vote.weight > 0)
-            {
+            if (vote.weight > 0) {
                 output += "+";
             }
             //output += vote.weight + " " + vote.voterName + " Reason: " + vote.reason + "     #" + vote.timeVoted + "\n";
             output += vote.weight + " " + vote.receiverName + ": <@" + vote.receiver + ">" + " Reason: " + vote.reason + "\n";
-            
+
         }
         MessageEmbed embedHistory = getEmbedHistory(event, receiverID, repNumber, RepUser.isHardClear(receiverID), output, full);
-        
-        
-        
+
         return embedHistory;
     }
-    
-    
+
     public static MessageEmbed getEmbedHistory(MessageReceivedEvent event, String userID, long repNumber, boolean isHardClear, String text, boolean fullHistory) {
         // Create the EmbedBuilder instance
         EmbedBuilder eb = new EmbedBuilder();
-        String repNumberS = "" +repNumber;
-        if (repNumber >= 1)
-        {
+        String repNumberS = "" + repNumber;
+        if (repNumber >= 1) {
             repNumberS = "+" + repNumber;
         }
         String hardclear = "Not yet";
-        if (isHardClear)
-        {
+        if (isHardClear) {
             hardclear = "Unlocked :)";
         }
 
@@ -87,16 +84,13 @@ public class RepHistory {
          */
         String title = Main.jda.retrieveUserById(userID).complete().getName();
         String url = Main.jda.retrieveUserById(userID).complete().getAvatarUrl();
-        if (title.toLowerCase().charAt(title.length()-1) == 's')
-        {
+        if (title.toLowerCase().charAt(title.length() - 1) == 's') {
             title += "' Rep History";
-        }
-        else
-        {
+        } else {
             title += "'s Rep History";
         }
-        
-        eb.setTitle(title , null);
+
+        eb.setTitle(title, null);
 
         /*
     Set the color
@@ -118,13 +112,40 @@ public class RepHistory {
         //eb.addField(":star2: Repuation", repNumberS, true);
         //eb.addField(":trophy: Hard Clear", hardclear, true);
         //eb.addField(":scales: Weight", "" + RepUser.getWeight(null, userID), true);
-        if (!fullHistory)
-        {
+        if (!fullHistory) {
             text += "\n\nFor full history please type $rephistory full";
         }
+        boolean firstSend = false;
+        boolean sentLastMessage = false;
         System.out.println(text);
         System.out.println(text.length());
-        eb.addField("Repuation History :page_facing_up:", text, false);
+        if (text.length() >= 1000) {
+            String[] split = text.split("\n");
+            String textToSend = split[0];
+            for (int i = 1; i < split.length; i++) {
+                String temp = textToSend + split[i];
+                if (temp.length() >= 1000) {
+                    if (!firstSend) {
+                        eb.addField("Repuation History :page_facing_up:", textToSend, false);
+                    } else {
+                        eb.addField("", textToSend, false);
+                    }
+                    firstSend = true;
+
+                    textToSend = split[i];
+                } else {
+                    textToSend = temp;
+                }
+
+            }
+            if (!firstSend) {
+                eb.addField("Repuation History :page_facing_up:", textToSend, false);
+            } else {
+                eb.addField("", textToSend, false);
+            }
+        } else {
+            eb.addField("Repuation History :page_facing_up:", text, false);
+        }
 
         /*
     Add spacer like field
@@ -138,9 +159,6 @@ public class RepHistory {
     2. Arg: url as string (can be null)
     3. Arg: icon url as string (can be null)
          */
-        
-        
-        
         //eb.setAuthor(, null, event.getAuthor().getEffectiveAvatarUrl());
 
         /*
