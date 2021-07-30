@@ -123,7 +123,7 @@ public class RepHistory {
             String[] split = text.split("\n");
             String textToSend = split[0];
             for (int i = 1; i < split.length; i++) {
-                String temp = textToSend + split[i];
+                String temp = textToSend +"\n"+ split[i];
                 if (temp.length() >= 1000) {
                     if (!firstSend) {
                         eb.addField("Repuation History :page_facing_up:", textToSend, false);
