@@ -117,8 +117,6 @@ public class RepHistory {
         }
         boolean firstSend = false;
         boolean sentLastMessage = false;
-        System.out.println(text);
-        System.out.println(text.length());
         if (text.length() >= 1000) {
             String[] split = text.split("\n");
             String textToSend = split[0];
