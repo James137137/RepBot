@@ -122,6 +122,8 @@ public class RepHistory {
         {
             text += "\n\nFor full history please type $rephistory full";
         }
+        System.out.println(text);
+        System.out.println(text.length());
         eb.addField("Repuation History :page_facing_up:", text, false);
 
         /*
