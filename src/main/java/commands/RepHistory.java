@@ -55,7 +55,7 @@ public class RepHistory {
                 output += "+";
             }
             //output += vote.weight + " " + vote.voterName + " Reason: " + vote.reason + "     #" + vote.timeVoted + "\n";
-            output += vote.weight + " " + vote.receiverName + " Reason: " + vote.reason + "\n";
+            output += vote.weight + " " + vote.receiverName + ": <@" + vote.receiver + ">" + " Reason: " + vote.reason + "\n";
             
         }
         MessageEmbed embedHistory = getEmbedHistory(event, receiverID, repNumber, RepUser.isHardClear(receiverID), output, full);
