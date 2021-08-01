@@ -116,6 +116,11 @@ public class PlusRep {
                 event.getChannel().sendMessage(receiverName + " is no longer a hard clear member").queue();
             }
         }
+        
+        if (receiverID.equals("866951897575587850"))
+        {
+            event.getTextChannel().sendMessage("Thank you <@" + event.getAuthor().getId() +">. I love you!");
+        }
 
         String message = weight + " point has been given to " + receiverName + " and now has a total of " + newRepAmount;
         return message;

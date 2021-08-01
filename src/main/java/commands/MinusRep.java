@@ -119,87 +119,13 @@ public class MinusRep {
                 event.getChannel().sendMessage(receiverName + " is no longer a hard clear member").queue();
             }
         }
+        
+        if (receiverID.equals("866951897575587850"))
+        {
+            event.getTextChannel().sendMessage("Thank you <@" + event.getAuthor().getId() +">.... Oh wait.... no!!!");
+        }
 
         String message = weight + " point has been taken from " + receiverName + " and now has a total of " + newRepAmount;
-        return message;
-    }
-    
-    
-    public static String MinusRepOld(MessageReceivedEvent event) {
-        if (!Time.canVoteNow(event.getMember().getId()))
-        {
-            return "You can't rep yet. " + Time.Time(event.getMember().getId());
-        }
-        Role role = event.getGuild().getRoleById(Settings.hardClearID);
-        List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-        if (mentionedMembers.isEmpty()) {
-            return "Please tag a user to give rep too!";
-        }
-
-        if (mentionedMembers.size() > 1) {
-            return "Please only mention one user with the @user";
-        }
-        Member mentionedMember = mentionedMembers.get(0);
-        if (!Main.debug && event.getMember().getId().equals(mentionedMember.getId()))
-        {
-            return "You can not rep yourself";
-        }
-        String voterID = event.getMember().getId();
-        String receiverID = mentionedMember.getId();
-        if (!Main.debug && VoteHistoryDataBase.hasMinusAlreadyVotedForUser(voterID, receiverID)) {
-            return "You can only remove rep to someone once";
-        }
-
-        int weight = -1;
-        if (RepUser.isHardClear(event.getMember())) {
-            weight = -2;
-        }
-        String[] split = event.getMessage().getContentRaw().split(" ");
-        if (split.length <= 2) {
-            return "You need to provide a reason";
-        }
-
-        String reason = split[2];
-        for (int i = 3; i < split.length; i++) {
-            reason = reason + " " + split[i];
-        }
-        if (reason.length() < 5 || reason.length() > 150)
-        {
-            return "Please enter a reason within 5-150 characters";
-        }
-        
-        if (reason.contains("\n"))
-        {
-            return "Sorry please don't include extra lines";
-        }
-        
-        //User.checkHC(receiverID, event, UserRepDataBase.getRepNumber(receiverID));
-
-        //Vote vote = new Vote(event.getMember(), mentionedMember, User.isHardClear(mentionedMember), weight, reason,false);
-        Vote vote = new Vote(event.getMember(), mentionedMember.getId(), RepUser.isHardClear(mentionedMember), weight, reason,false);
-        //vote.updateRecieverName();
-        VoteHistoryDataBase.addNewVote(vote);
-        
-        long newRepAmount = UserRepDataBase.getRepNumber(receiverID) + weight;
-        UserRepDataBase.setRepNumber(receiverID, newRepAmount);
-        
-        //demote Check
-        if (RepUser.isHardClear(mentionedMember)) {
-            if (newRepAmount < Settings.requiredForHardClear) {
-                event.getGuild().removeRoleFromMember(mentionedMember, role).queue();
-                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is no longer a hard clear member").queue();
-            }
-
-        } else
-        {
-            if (newRepAmount >= Settings.requiredForHardClear) {
-                AuditableRestAction<Void> addRoleToMember = event.getGuild().addRoleToMember(mentionedMember, role);
-                addRoleToMember.queue();
-                event.getChannel().sendMessage(mentionedMember.getAsMention() + " is now a hard clear member").queue();
-            }
-        }
-        
-        String message = weight + " point has been taken from " + mentionedMember.getAsMention() + " and now has a total of " + newRepAmount;
         return message;
     }
 

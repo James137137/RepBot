@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
 
 /**
  *
@@ -34,12 +35,10 @@ public class test {
             //System.out.println(guild.getName());
             if (guild.getName().equals("Proximity Gaming"))
             {
-                List<Role> roles = guild.getRoles();
-                for (Role role : roles) {
-                    System.out.println(role.getName() + " " + role.getId());
-                }
+                List<TextChannel> textChannelsByName = guild.getTextChannelsByName("give-rep-here", true);
+                textChannelsByName.get(0).sendMessage("I love you <@827665527786569758>!").queue();
             }
         }
-        System.exit(0);
+        
     }
 }
