@@ -36,7 +36,16 @@ public class History {
                 receiverID = split[1];
                 boolean vaild = RepUser.CheckIfVaildID(event, receiverID);
                 if (!vaild) {
-                    return OnCommand.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this",Color.GREEN);
+                    if (full)
+                    {
+                        mentionedMember = event.getMember();
+                        receiverID = event.getMember().getId();
+                    }
+                    else
+                    {
+                        return OnCommand.getEmbed("History", "Sorry the number doesn't seem to be vaild. Please double check this",Color.GREEN);
+                    }
+                    
                 }
             } else {
                mentionedMember = event.getMember();

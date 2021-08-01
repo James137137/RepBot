@@ -32,6 +32,7 @@ public class Settings {
     public static String fileName = "settings.json";
     public static String HardClearName = "Hard Clear Member";
      public static String hardClearID = "786709070198734870"; //LiveServerID
+     public static String SrModID = "808925787158872125"; //LiveServerID
     //public static String hardClearID = "866983820054102067"; //TestServerID
 
     private static JSONObject settingsJSONObject = new JSONObject();
@@ -48,7 +49,7 @@ public class Settings {
         commands.add("+rep");
         commands.add("-rep");
         commands.add("$history");
-        commands.add("$rephistory");
+        commands.add("$repgiven");
         commands.add("$time");
         commands.add("$test");
         commands.add("$update");
@@ -56,12 +57,12 @@ public class Settings {
         List<String> commands2 = new ArrayList<String>();
         commands2.add("$time");
         commands2.add("$history");
-        commands2.add("$rephistory");
+        commands2.add("$repgiven");
         commands2.add("$update");
         allowedCommandsPerChannel.put("bot-commands", commands2);
         List<String> commands3 = new ArrayList<String>();
         commands3.add("$history");
-        commands3.add("$rephistory");
+        commands3.add("$repgiven");
         commands3.add("$delete");
         commands3.add("$reset");
         commands3.add("$setrep");

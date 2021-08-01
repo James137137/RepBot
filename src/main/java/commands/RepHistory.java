@@ -37,7 +37,7 @@ public class RepHistory {
         String output = "";
         List<Vote> voteList = VoteHistoryDataBase.getVoteListVoter(receiverID);
         if (voteList.isEmpty()) {
-            return OnCommand.getEmbed("Rep History", "No history available", Color.white);
+            return OnCommand.getEmbed("Rep Given", "No history available", Color.white);
         }
 
         int j = 0;
@@ -85,9 +85,9 @@ public class RepHistory {
         String title = Main.jda.retrieveUserById(userID).complete().getName();
         String url = Main.jda.retrieveUserById(userID).complete().getAvatarUrl();
         if (title.toLowerCase().charAt(title.length() - 1) == 's') {
-            title += "' Rep History";
+            title += "' Rep Given";
         } else {
-            title += "'s Rep History";
+            title += "'s Rep Given";
         }
 
         eb.setTitle(title, null);
@@ -113,7 +113,7 @@ public class RepHistory {
         //eb.addField(":trophy: Hard Clear", hardclear, true);
         //eb.addField(":scales: Weight", "" + RepUser.getWeight(null, userID), true);
         if (!fullHistory) {
-            text += "\n\nFor full history please type $rephistory full";
+            text += "\n\nFor full history please type $repgiven full";
         }
         boolean firstSend = false;
         boolean sentLastMessage = false;

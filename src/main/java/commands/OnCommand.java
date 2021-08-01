@@ -52,8 +52,8 @@ public class OnCommand {
                 channel.sendMessage(commands.History.History(event, false)).queue();
             }
 
-        } else if (contentRaw.startsWith("$rephistory")) {
-            title = "Rep History";
+        } else if (contentRaw.startsWith("$repgiven")) {
+            title = "Rep Given";
             if (contentRaw.toLowerCase().contains("full")) {
 
                 channel.sendMessage(commands.RepHistory.RepHistory(event, true)).queue();

@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 /**
  *
@@ -33,9 +34,9 @@ public class test {
             //System.out.println(guild.getName());
             if (guild.getName().equals("Proximity Gaming"))
             {
-                List<Member> members = guild.getBoosters();
-                for (Member member : members) {
-                    //System.out.println(member.getEffectiveName());
+                List<Role> roles = guild.getRoles();
+                for (Role role : roles) {
+                    System.out.println(role.getName() + " " + role.getId());
                 }
             }
         }
