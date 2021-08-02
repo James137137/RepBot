@@ -147,7 +147,34 @@ public class History {
         {
             text += "\n\nFor full history please type $history full";
         }
-        eb.addField("Repuation History :page_facing_up:", text, false);
+        boolean firstSend = false;
+        if (text.length() >= 1000) {
+            String[] split = text.split("\n");
+            String textToSend = split[0];
+            for (int i = 1; i < split.length; i++) {
+                String temp = textToSend +"\n"+ split[i];
+                if (temp.length() >= 1000) {
+                    if (!firstSend) {
+                        eb.addField("Repuation History :page_facing_up:", textToSend, false);
+                    } else {
+                        eb.addField("", textToSend, false);
+                    }
+                    firstSend = true;
+
+                    textToSend = split[i];
+                } else {
+                    textToSend = temp;
+                }
+
+            }
+            if (!firstSend) {
+                eb.addField("Repuation History :page_facing_up:", textToSend, false);
+            } else {
+                eb.addField("", textToSend, false);
+            }
+        } else {
+            eb.addField("Repuation History :page_facing_up:", text, false);
+        }
 
         /*
     Add spacer like field
